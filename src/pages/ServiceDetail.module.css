@@ -1,0 +1,62 @@
+.treatments {
+  list-style: none;
+  margin: 1.8rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+}
+.treatment {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5rem;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.treatment:first-child {
+  border-top: 1px solid var(--line-soft);
+}
+.tName {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: var(--charcoal);
+  line-height: 1.2;
+}
+.tDuration {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-left: 0.6rem;
+}
+.tDesc {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 0.35rem 0 0;
+  max-width: 52ch;
+}
+.tPrice {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: var(--accent-deep);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.blockHead {
+  margin-bottom: 0.4rem;
+}
+.blockSub {
+  color: var(--accent);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+.blockBody {
+  color: var(--muted);
+  margin-top: 0.8rem;
+}
+
+.stack {
+  display: grid;
+  gap: clamp(4rem, 8vw, 7rem);
+}

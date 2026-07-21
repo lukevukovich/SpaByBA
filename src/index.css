@@ -1,0 +1,338 @@
+/* ============================================================
+   The Med Spa by B.A. — Global Design System
+   Calm, premium, editorial luxury medspa aesthetic
+   ============================================================ */
+
+:root {
+  /* Color — warm whites, muted beige, charcoal, soft accent */
+  --bg: #faf7f2;
+  --bg-alt: #f2ece2;
+  --bg-deep: #eae1d4;
+  --surface: #ffffff;
+  --charcoal: #26221d;
+  --ink: #3c362f;
+  --muted: #8c8377;
+  --beige: #d9cbb6;
+  --accent: #a9835c;
+  --accent-soft: #c4a483;
+  --accent-deep: #8a6942;
+  --line: rgba(38, 34, 29, 0.12);
+  --line-soft: rgba(38, 34, 29, 0.07);
+  --shadow-sm: 0 2px 20px rgba(38, 34, 29, 0.06);
+  --shadow-md: 0 18px 50px rgba(38, 34, 29, 0.1);
+  --shadow-lg: 0 30px 80px rgba(38, 34, 29, 0.14);
+
+  /* Type */
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+
+  /* Spacing / layout */
+  --container: 1220px;
+  --container-narrow: 900px;
+  --radius: 4px;
+  --radius-lg: 10px;
+  --nav-h: 84px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 0.7s;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  color: var(--charcoal);
+  line-height: 1.08;
+  margin: 0;
+  letter-spacing: 0.005em;
+}
+
+p {
+  margin: 0 0 1.1em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ---------- Typographic scale ---------- */
+.display {
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  line-height: 0.98;
+}
+.h1 {
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+}
+.h2 {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+}
+.h3 {
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0;
+}
+
+.lead {
+  font-size: clamp(1.05rem, 1.5vw, 1.28rem);
+  line-height: 1.7;
+  color: var(--ink);
+  font-weight: 300;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* ---------- Layout primitives ---------- */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 3.5rem);
+}
+.container-narrow {
+  max-width: var(--container-narrow);
+}
+
+.section {
+  padding-block: clamp(4.5rem, 10vw, 9rem);
+}
+.section-tight {
+  padding-block: clamp(3rem, 6vw, 5rem);
+}
+
+.bg-alt {
+  background: var(--bg-alt);
+}
+.bg-deep {
+  background: var(--bg-deep);
+}
+.bg-charcoal {
+  background: var(--charcoal);
+  color: #eee6da;
+}
+.bg-charcoal h1,
+.bg-charcoal h2,
+.bg-charcoal h3 {
+  color: #f6f0e6;
+}
+
+.center {
+  text-align: center;
+}
+.max-60 {
+  max-width: 60ch;
+}
+.mx-auto {
+  margin-inline: auto;
+}
+
+.grid {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 900px) {
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 620px) {
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  --btn-fg: #fff;
+  --btn-bg: var(--charcoal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 1.05em 2.2em;
+  border: 1px solid var(--btn-bg);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition:
+    color 0.5s var(--ease),
+    background 0.5s var(--ease),
+    border-color 0.5s var(--ease),
+    transform 0.5s var(--ease);
+}
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
+  z-index: 0;
+}
+.btn > * {
+  position: relative;
+  z-index: 1;
+}
+.btn span {
+  position: relative;
+  z-index: 1;
+}
+.btn:hover {
+  border-color: var(--accent);
+}
+.btn:hover::after {
+  transform: scaleX(1);
+}
+
+.btn-outline {
+  --btn-bg: transparent;
+  --btn-fg: var(--charcoal);
+  border-color: var(--charcoal);
+}
+.btn-outline:hover {
+  color: #fff;
+}
+
+.btn-light {
+  --btn-bg: transparent;
+  --btn-fg: #f6f0e6;
+  border-color: rgba(246, 240, 230, 0.5);
+}
+.btn-light:hover {
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.link-underline {
+  position: relative;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+  padding-bottom: 3px;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s var(--ease);
+}
+.link-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ---------- Utility ---------- */
+.stack > * + * {
+  margin-top: 1.4rem;
+}
+.divider {
+  width: 54px;
+  height: 1px;
+  background: var(--accent);
+  margin: 1.4rem 0;
+}
+.divider.center-line {
+  margin-inline: auto;
+}
+
+/* ---------- Accessibility ---------- */
+:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 3px;
+}
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--charcoal);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  z-index: 200;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

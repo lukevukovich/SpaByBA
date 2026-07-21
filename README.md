@@ -1,2 +1,2 @@
-# SpaByBA
-Website for the Spa by B.A.
+# Spa By B.A.
+The official Spa by B.A. website.

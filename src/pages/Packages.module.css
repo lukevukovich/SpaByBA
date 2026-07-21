@@ -1,0 +1,137 @@
+.groupStack {
+  display: grid;
+  gap: clamp(3.5rem, 7vw, 6rem);
+  margin-top: 3rem;
+}
+
+.items {
+  list-style: none;
+  margin: 1.6rem 0 0;
+  padding: 0;
+}
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5rem;
+  padding: 1.15rem 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.item:first-child {
+  border-top: 1px solid var(--line-soft);
+}
+.itemName {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: var(--charcoal);
+  line-height: 1.25;
+}
+.itemDesc {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin: 0.3rem 0 0;
+  max-width: 54ch;
+}
+.tag {
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-left: 0.6rem;
+}
+.itemPrice {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  color: var(--accent-deep);
+  white-space: nowrap;
+}
+
+/* Bundles */
+.bundleGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.2rem, 2.5vw, 2rem);
+}
+@media (max-width: 900px) {
+  .bundleGrid {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    margin-inline: auto;
+  }
+}
+.bundle {
+  background: var(--surface);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.5s var(--ease),
+    box-shadow 0.5s var(--ease);
+}
+.bundle:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+.bundleMedia {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+.bundleMedia img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.1s var(--ease);
+}
+.bundle:hover .bundleMedia img {
+  transform: scale(1.06);
+}
+.bundleBody {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.bundleName {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  color: var(--charcoal);
+}
+.bundlePrice {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  color: var(--accent-deep);
+  margin: 0.5rem 0 0.2rem;
+}
+.bundleValue {
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.bundleList {
+  list-style: none;
+  margin: 1.4rem 0 1.8rem;
+  padding: 0;
+  display: grid;
+  gap: 0.7rem;
+  flex: 1;
+}
+.bundleList li {
+  position: relative;
+  padding-left: 1.4rem;
+  font-size: 0.94rem;
+  color: var(--ink);
+}
+.bundleList li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
