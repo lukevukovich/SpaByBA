@@ -1,6 +1,8 @@
 .header {
   position: fixed;
-  inset: 0 0 auto 0;
+  top: var(--vv-top, 0px);
+  left: var(--vv-left, 0px);
+  width: var(--vv-width, 100%);
   z-index: 100;
   transition:
     background 0.5s var(--ease),
@@ -220,8 +222,13 @@
   background: var(--bg);
   display: flex;
   flex-direction: column;
-  padding: 1.5rem clamp(1.25rem, 5vw, 2.5rem) 2.5rem;
+  height: 100dvh;
+  max-height: 100dvh;
+  padding: calc(1.5rem + env(safe-area-inset-top, 0px))
+    clamp(1.25rem, 5vw, 2.5rem) calc(2.5rem + env(safe-area-inset-bottom, 0px));
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 .drawerTop {
   display: flex;
@@ -236,6 +243,7 @@
   line-height: 1;
   cursor: pointer;
   color: var(--charcoal);
+  touch-action: manipulation;
 }
 .mLink {
   display: block;
@@ -245,6 +253,7 @@
   padding: 0.5rem 0;
   border-bottom: 1px solid var(--line-soft);
   white-space: nowrap;
+  touch-action: manipulation;
 }
 .mSub {
   padding: 0.35rem 0 0.5rem 1rem;

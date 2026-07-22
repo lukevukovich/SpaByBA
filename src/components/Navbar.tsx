@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { nav, links, site, LOGO } from "../data/site";
@@ -25,14 +25,70 @@ export function Navbar() {
   const { pathname } = useLocation();
   const firstLoad = useRef(true);
   const navHovered = useRef(false);
+  const lockScrollY = useRef(0);
+  const headerRef = useRef<HTMLElement>(null);
   const overHero =
     HERO_ROUTES.has(pathname) || pathname.startsWith("/services/");
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+  useLayoutEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
+    let rafId = 0;
+    const applyViewportMetrics = () => {
+      const vv = window.visualViewport;
+      const top = Math.max(0, vv?.offsetTop ?? 0);
+      const left = Math.max(0, vv?.offsetLeft ?? 0);
+      const width = vv?.width ?? window.innerWidth;
+
+      header.style.setProperty("--vv-top", `${top}px`);
+      header.style.setProperty("--vv-left", `${left}px`);
+      header.style.setProperty("--vv-width", `${Math.max(0, width)}px`);
+    };
+    const schedule = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(applyViewportMetrics);
+    };
+
+    applyViewportMetrics();
+    window.addEventListener("resize", schedule, { passive: true });
+    window.addEventListener("orientationchange", schedule, { passive: true });
+    window.visualViewport?.addEventListener("resize", schedule);
+    window.visualViewport?.addEventListener("scroll", schedule);
+
+    return () => {
+      window.removeEventListener("resize", schedule);
+      window.removeEventListener("orientationchange", schedule);
+      window.visualViewport?.removeEventListener("resize", schedule);
+      window.visualViewport?.removeEventListener("scroll", schedule);
+      if (rafId) cancelAnimationFrame(rafId);
+      header.style.removeProperty("--vv-top");
+      header.style.removeProperty("--vv-left");
+      header.style.removeProperty("--vv-width");
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    let ticking = false;
+    let rafId = 0;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      rafId = requestAnimationFrame(() => {
+        const current = window.scrollY;
+        setScrolled((prev) => {
+          const next = prev ? current > 24 : current > 40;
+          return prev === next ? prev : next;
+        });
+        ticking = false;
+      });
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   // Collapse any open hover dropdown after navigating; it reactivates once the
@@ -54,14 +110,51 @@ export function Navbar() {
   }, [pathname]);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (open) {
+      lockScrollY.current = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${lockScrollY.current}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.width = "100%";
+      document.body.style.overflow = "hidden";
+    } else {
+      const top = document.body.style.top;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.width = "";
+      document.body.style.overflow = "";
+      if (top) {
+        window.scrollTo({
+          top: lockScrollY.current,
+          left: 0,
+          behavior: "auto",
+        });
+      }
+    }
     return () => {
+      const top = document.body.style.top;
+      if (top) {
+        window.scrollTo({
+          top: lockScrollY.current,
+          left: 0,
+          behavior: "auto",
+        });
+      }
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.width = "";
       document.body.style.overflow = "";
     };
   }, [open]);
 
   return (
     <header
+      ref={headerRef}
       className={[
         styles.header,
         scrolled ? styles.scrolled : "",
