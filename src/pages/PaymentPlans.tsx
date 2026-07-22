@@ -2,7 +2,6 @@ import {
   PageHero,
   SectionHead,
   CtaBand,
-  BookButton,
 } from "../components/sections";
 import { Reveal, Stagger, StaggerItem } from "../components/motion";
 import { paymentTestimonials } from "../data/testimonials";
@@ -122,17 +121,6 @@ export function PaymentPlans() {
         title="Book Now, Pay Over Time"
         text="Schedule your treatment today and apply with Cherry at checkout."
       />
-      <div
-        className="container center"
-        style={{
-          marginTop: "-3rem",
-          paddingBottom: "4rem",
-          position: "relative",
-          zIndex: 1,
-        }}
-      >
-        <BookButton label="Book an Appointment" />
-      </div>
     </>
   );
 }

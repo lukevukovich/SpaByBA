@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { nav, links, site, LOGO } from "../data/site";
@@ -6,11 +6,27 @@ import styles from "./Navbar.module.css";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+/** Routes whose page begins with a full-bleed hero image the header overlays. */
+const HERO_ROUTES = new Set([
+  "/",
+  "/services",
+  "/packages",
+  "/memberships",
+  "/get-in-touch",
+  "/get-in-touch/payment-plans",
+  "/terms-of-use",
+  "/accessibility-statement",
+]);
+
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [suppressHover, setSuppressHover] = useState(false);
   const { pathname } = useLocation();
-  const overHero = pathname === "/";
+  const firstLoad = useRef(true);
+  const navHovered = useRef(false);
+  const overHero =
+    HERO_ROUTES.has(pathname) || pathname.startsWith("/services/");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -19,7 +35,23 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => setOpen(false), [pathname]);
+  // Collapse any open hover dropdown after navigating; it reactivates once the
+  // pointer leaves and re-enters a nav item. Skip the initial mount so the
+  // dropdowns aren't suppressed on first page load.
+  useEffect(() => {
+    setOpen(false);
+    if (firstLoad.current) {
+      firstLoad.current = false;
+      return;
+    }
+    // Only suppress the dropdown if the cursor is actually over the nav at
+    // navigation time (e.g. a dropdown link was just clicked and the panel
+    // would otherwise linger). Otherwise the flag would stay stuck until a
+    // mouseleave that never comes, breaking the first hover on the new page.
+    if (navHovered.current) {
+      setSuppressHover(true);
+    }
+  }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -40,10 +72,21 @@ export function Navbar() {
         <div className={styles.inner}>
           <Link to="/" className={styles.brand} aria-label={site.name}>
             <img src={LOGO} alt="" className={styles.brandLogo} />
-            <span className={styles.brandText}>The Med Spa by B.A.</span>
           </Link>
 
-          <nav className={styles.nav} aria-label="Primary">
+          <nav
+            className={[styles.nav, suppressHover ? styles.suppressHover : ""]
+              .join(" ")
+              .trim()}
+            aria-label="Primary"
+            onMouseEnter={() => {
+              navHovered.current = true;
+            }}
+            onMouseLeave={() => {
+              navHovered.current = false;
+              setSuppressHover(false);
+            }}
+          >
             {nav.map((item) => (
               <div key={item.label} className={styles.navItem}>
                 {item.to ? (

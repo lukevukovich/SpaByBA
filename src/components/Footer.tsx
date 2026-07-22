@@ -119,7 +119,9 @@ export function Footer() {
               <strong>Hours</strong>
               Mon–Thu 10am–8pm
               <br />
-              Fri–Sat 10am–4pm · Sun Closed
+              Fri–Sat 10am–4pm
+              <br />
+              Sun Closed
             </div>
           </div>
         </div>

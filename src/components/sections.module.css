@@ -23,9 +23,9 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(20, 17, 13, 0.35) 0%,
-    rgba(20, 17, 13, 0.15) 40%,
-    rgba(20, 17, 13, 0.72) 100%
+    rgba(20, 17, 13, 0.46) 0%,
+    rgba(20, 17, 13, 0.22) 42%,
+    rgba(20, 17, 13, 0.8) 100%
   );
 }
 .heroInner {
@@ -38,18 +38,21 @@
 .heroEyebrow {
   color: var(--accent-soft);
   margin-bottom: 1.2rem;
+  text-shadow: 0 1px 16px rgba(20, 17, 13, 0.45);
 }
 .heroTitle {
   color: #fdf9f1;
   font-size: clamp(2.6rem, 6.5vw, 5.5rem);
   line-height: 1;
   margin-bottom: 1.5rem;
+  text-shadow: 0 2px 30px rgba(20, 17, 13, 0.4);
 }
 .heroSub {
-  color: rgba(246, 240, 230, 0.9);
+  color: rgba(246, 240, 230, 0.92);
   max-width: 60ch;
   font-size: clamp(1.02rem, 1.5vw, 1.25rem);
   font-weight: 300;
+  text-shadow: 0 1px 20px rgba(20, 17, 13, 0.42);
 }
 .heroNote {
   margin-top: 1.4rem;
