@@ -5,10 +5,8 @@ import {
 } from "../components/sections";
 import { Reveal, Stagger, StaggerItem } from "../components/motion";
 import { paymentTestimonials } from "../data/testimonials";
-import { img } from "../data/site";
+import { img, links } from "../data/site";
 import styles from "./PaymentPlans.module.css";
-
-const CHERRY = "https://withcherry.com/";
 
 const props = [
   { num: "0%", text: "APR options available on qualifying plans" },
@@ -63,7 +61,7 @@ export function PaymentPlans() {
           ))}
         </Stagger>
         <Reveal className="center" style={{ marginTop: "3rem" }}>
-          <a href={CHERRY} target="_blank" rel="noreferrer" className="btn">
+          <a href={links.cherry} target="_blank" rel="noreferrer" className="btn">
             <span>See If You Qualify</span>
           </a>
         </Reveal>
@@ -106,8 +104,8 @@ export function PaymentPlans() {
           <p className={styles.disclaimer}>
             Example payment amounts and 0% APR or other promotional rates are
             subject to eligibility and creditworthiness. Financing is provided
-            by Cherry Technologies, Inc. (NMLS #2061234) and its lending
-            partners. See withcherry.com for terms, lending partners, and
+            by Cherry Technologies, Inc. (NMLS #2061234) and its lending.
+            See {links.cherry} for terms, lending partners, and
             accessibility information.
           </p>
         </Reveal>
