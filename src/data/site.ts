@@ -27,6 +27,7 @@ export const links = {
     "https://www.facebook.com/p/Bella-Amici-Salon-The-Spa-By-BA-100063524713338/",
   instagram: "https://www.instagram.com/bellaamicisalon/",
   cherry: "https://pay.withcherry.com/the-med-spa-at-b-a--llc",
+  salon: "https://salonbellaamici.com/",
 } as const;
 
 export type NavItem = {
@@ -53,6 +54,7 @@ export const nav: NavItem[] = [
   { label: "Packages", to: "/packages" },
   { label: "Memberships", to: "/memberships" },
   { label: "Gift Certificates", href: links.giftCertificates },
+  { label: "About Us", to: "/about-us" },
   {
     label: "Get in Touch",
     to: "/get-in-touch",

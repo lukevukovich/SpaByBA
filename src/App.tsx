@@ -9,6 +9,7 @@ import { Services } from "./pages/Services";
 import { ServiceDetailPage } from "./pages/ServiceDetailPage";
 import { Packages } from "./pages/Packages";
 import { Memberships } from "./pages/Memberships";
+import { AboutUs } from "./pages/AboutUs";
 import { GetInTouch } from "./pages/GetInTouch";
 import { PaymentPlans } from "./pages/PaymentPlans";
 import { LegalPage } from "./pages/LegalPage";
@@ -63,6 +64,14 @@ function App() {
             element={
               <PageTransition>
                 <Memberships />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/about-us"
+            element={
+              <PageTransition>
+                <AboutUs />
               </PageTransition>
             }
           />

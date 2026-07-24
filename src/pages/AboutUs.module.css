@@ -1,0 +1,200 @@
+/* ---------- Intro ---------- */
+.intro {
+  max-width: 60rem;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+/* ---------- Banner headline ---------- */
+.banner {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  text-align: center;
+}
+.bannerInner {
+  max-width: 60rem;
+  margin: 0 auto;
+}
+.bannerHeadline {
+  font-family: var(--font-display, inherit);
+  font-size: clamp(1.8rem, 4.5vw, 3.4rem);
+  line-height: 1.1;
+  font-weight: 400;
+}
+.bannerHighlight {
+  position: relative;
+  color: var(--accent, #b98a5e);
+  white-space: nowrap;
+}
+.bannerHighlight::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.02em;
+  height: 0.12em;
+  background: var(--accent-soft, #d8b48c);
+  opacity: 0.55;
+  border-radius: 999px;
+}
+
+/* ---------- Founder ---------- */
+.founder {
+  max-width: 54rem;
+  margin: 0 auto;
+  text-align: center;
+}
+.founder p {
+  margin-bottom: 1.1rem;
+}
+.signature {
+  width: 180px;
+  max-width: 60%;
+  height: auto;
+  margin: 1.5rem 0 0.5rem;
+  display: block;
+}
+.ownerNote {
+  font-size: 0.95rem;
+  color: var(--muted, #6c6357);
+  margin-top: 0.75rem;
+}
+
+/* ---------- Team ---------- */
+.teamHead {
+  text-align: center;
+  max-width: 46rem;
+  margin: 0 auto;
+}
+.teamTitle {
+  font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+  line-height: 1.15;
+  color: var(--ink, inherit);
+  margin-top: 1rem;
+}
+.teamHighlight {
+  position: relative;
+  color: var(--accent, #b98a5e);
+}
+.teamHighlight::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.02em;
+  height: 0.12em;
+  background: var(--accent-soft, #d8b48c);
+  opacity: 0.55;
+  border-radius: 999px;
+}
+.teamStack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 8vw, 6rem);
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+}
+.memberName {
+  margin-bottom: 0.35rem;
+}
+.memberRole {
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent, #b98a5e);
+  margin-bottom: 1.2rem;
+}
+.memberBio {
+  color: var(--muted, #6c6357);
+  margin-bottom: 1rem;
+}
+
+/* ---------- Closing ---------- */
+.closing {
+  max-width: 54rem;
+  margin: 0 auto;
+  text-align: center;
+}
+.closingCtas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.closingHighlight {
+  margin-top: 2.6rem;
+  font-family: var(--font-display, inherit);
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+}
+
+/* ---------- Gallery ---------- */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.8rem, 1.5vw, 1.2rem);
+  margin-top: clamp(2rem, 5vw, 3rem);
+}
+@media (max-width: 760px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.galleryItem {
+  border-radius: var(--radius, 14px);
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+}
+.galleryItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.1s var(--ease, ease);
+}
+.galleryItem:hover img {
+  transform: scale(1.08);
+}
+
+/* ---------- Video ---------- */
+.video {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "media text";
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+@media (max-width: 860px) {
+  .video {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "text"
+      "media";
+    gap: 2.5rem;
+  }
+}
+.videoMedia {
+  grid-area: media;
+  position: relative;
+  border-radius: var(--radius-lg, 20px);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  box-shadow: var(--shadow-md, 0 20px 50px rgba(20, 17, 13, 0.18));
+  background: #000;
+}
+.videoMedia iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.videoText {
+  grid-area: text;
+}
+.videoCtas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}

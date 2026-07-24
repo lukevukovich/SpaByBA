@@ -12,6 +12,7 @@ const HERO_ROUTES = new Set([
   "/services",
   "/packages",
   "/memberships",
+  "/about-us",
   "/get-in-touch",
   "/get-in-touch/payment-plans",
   "/terms-of-use",

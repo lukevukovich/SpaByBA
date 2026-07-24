@@ -8,7 +8,7 @@ export function PageTransition({ children }: { children: ReactNode }) {
   const reduce = useReducedMotion();
   const mobileViewport =
     typeof window !== "undefined" &&
-    window.matchMedia("(max-width: 1040px)").matches;
+    window.matchMedia("(max-width: 1170px)").matches;
   const disableVerticalShift = reduce || mobileViewport;
   return (
     <motion.main

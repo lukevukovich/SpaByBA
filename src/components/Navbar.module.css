@@ -11,7 +11,7 @@
 }
 
 .header :global(.container) {
-  max-width: 1100px;
+  max-width: 1213px;
 }
 
 .header.scrolled {
@@ -34,11 +34,13 @@
   display: flex;
   align-items: center;
   gap: 0.7rem;
-  flex-shrink: 0;
+  /* Keep desktop header static: do not compress brand before mobile breakpoint. */
+  flex: 1 0 0;
+  min-width: max-content;
 }
 .brandLogo {
   height: 52px;
-  width: auto;
+  flex: 0 0 auto;
   border-radius: 4px;
   outline: 1px solid var(--line-soft);
   border: 2px solid white;
@@ -65,9 +67,9 @@
   align-items: center;
   gap: 2rem;
   justify-content: center;
-  flex: 1;
+  flex: 0 1 auto;
 }
-@media (max-width: 1040px) {
+@media (max-width: 1170px) {
   .nav {
     display: none;
   }
@@ -181,9 +183,12 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-left: auto;
+  /* Match brand behavior to prevent side-column squeeze. */
+  flex: 1 0 0;
+  min-width: max-content;
+  justify-content: flex-end;
 }
-@media (max-width: 1040px) {
+@media (max-width: 1170px) {
   .bookBtn {
     display: none;
   }
@@ -199,7 +204,7 @@
   padding: 8px;
   color: var(--charcoal);
 }
-@media (max-width: 1040px) {
+@media (max-width: 1170px) {
   .menuBtn {
     display: flex;
   }
