@@ -28,6 +28,7 @@ export function Navbar() {
   const navHovered = useRef(false);
   const lockScrollY = useRef(0);
   const restoreBehaviorRaf = useRef<number>(0);
+  const skipRestoreOnNextUnlock = useRef(false);
   const headerRef = useRef<HTMLElement>(null);
   const overHero =
     HERO_ROUTES.has(pathname) || pathname.startsWith("/services/");
@@ -97,6 +98,9 @@ export function Navbar() {
   // pointer leaves and re-enters a nav item. Skip the initial mount so the
   // dropdowns aren't suppressed on first page load.
   useEffect(() => {
+    if (open) {
+      skipRestoreOnNextUnlock.current = true;
+    }
     setOpen(false);
     if (firstLoad.current) {
       firstLoad.current = false;
@@ -150,6 +154,8 @@ export function Navbar() {
       const restoreY = Number.isFinite(parsedTop)
         ? Math.abs(parsedTop)
         : lockScrollY.current;
+      const shouldRestore = !skipRestoreOnNextUnlock.current;
+      skipRestoreOnNextUnlock.current = false;
 
       if (restoreBehaviorRaf.current) {
         cancelAnimationFrame(restoreBehaviorRaf.current);
@@ -162,7 +168,9 @@ export function Navbar() {
       document.body.style.width = "";
       document.body.style.overflow = "";
 
-      restoreScrollPositionInstantly(restoreY);
+      if (shouldRestore) {
+        restoreScrollPositionInstantly(restoreY);
+      }
     };
   }, [open]);
 
