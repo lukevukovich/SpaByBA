@@ -27,6 +27,7 @@ export function Navbar() {
   const firstLoad = useRef(true);
   const navHovered = useRef(false);
   const lockScrollY = useRef(0);
+  const restoreBehaviorRaf = useRef<number>(0);
   const headerRef = useRef<HTMLElement>(null);
   const overHero =
     HERO_ROUTES.has(pathname) || pathname.startsWith("/services/");
@@ -111,38 +112,48 @@ export function Navbar() {
   }, [pathname]);
 
   useEffect(() => {
-    if (open) {
-      lockScrollY.current = window.scrollY;
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${lockScrollY.current}px`;
-      document.body.style.left = "0";
-      document.body.style.right = "0";
-      document.body.style.width = "100%";
-      document.body.style.overflow = "hidden";
-    } else {
-      const top = document.body.style.top;
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
-      document.body.style.width = "";
-      document.body.style.overflow = "";
-      if (top) {
-        window.scrollTo({
-          top: lockScrollY.current,
-          left: 0,
-          behavior: "auto",
-        });
+    const restoreScrollPositionInstantly = (y: number) => {
+      const root = document.documentElement;
+      const prevRootBehavior = root.style.scrollBehavior;
+      const prevBodyBehavior = document.body.style.scrollBehavior;
+
+      root.style.scrollBehavior = "auto";
+      document.body.style.scrollBehavior = "auto";
+      window.scrollTo({
+        top: y,
+        left: 0,
+        behavior: "auto",
+      });
+
+      if (restoreBehaviorRaf.current) {
+        cancelAnimationFrame(restoreBehaviorRaf.current);
       }
-    }
+      restoreBehaviorRaf.current = requestAnimationFrame(() => {
+        root.style.scrollBehavior = prevRootBehavior;
+        document.body.style.scrollBehavior = prevBodyBehavior;
+      });
+    };
+
+    if (!open) return;
+
+    lockScrollY.current = window.scrollY;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${lockScrollY.current}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+    document.body.style.overflow = "hidden";
+
     return () => {
       const top = document.body.style.top;
-      if (top) {
-        window.scrollTo({
-          top: lockScrollY.current,
-          left: 0,
-          behavior: "auto",
-        });
+      const parsedTop = Number.parseFloat(top || "");
+      const restoreY = Number.isFinite(parsedTop)
+        ? Math.abs(parsedTop)
+        : lockScrollY.current;
+
+      if (restoreBehaviorRaf.current) {
+        cancelAnimationFrame(restoreBehaviorRaf.current);
+        restoreBehaviorRaf.current = 0;
       }
       document.body.style.position = "";
       document.body.style.top = "";
@@ -150,6 +161,8 @@ export function Navbar() {
       document.body.style.right = "";
       document.body.style.width = "";
       document.body.style.overflow = "";
+
+      restoreScrollPositionInstantly(restoreY);
     };
   }, [open]);
 
