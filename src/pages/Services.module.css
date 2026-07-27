@@ -1,0 +1,108 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.2rem, 2.5vw, 2rem);
+}
+@media (max-width: 940px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  position: relative;
+  display: block;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  color: #f6f0e6;
+  box-shadow: var(--shadow-sm);
+  isolation: isolate;
+}
+.cardMedia {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.cardMedia img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.1s var(--ease);
+}
+.card:hover .cardMedia img {
+  transform: scale(1.07);
+}
+.cardMedia::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 17, 13, 0) 30%,
+    rgba(20, 17, 13, 0.82) 100%
+  );
+  transition: background 0.5s var(--ease);
+}
+.card:hover .cardMedia::after {
+  background: linear-gradient(
+    180deg,
+    rgba(20, 17, 13, 0.15) 10%,
+    rgba(20, 17, 13, 0.88) 100%
+  );
+}
+.cardBody {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(1.5rem, 2.5vw, 2rem);
+}
+.cardIndex {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--accent-soft);
+  margin-bottom: 0.7rem;
+}
+.cardTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 2.4vw, 2rem);
+  color: #fdf9f1;
+  line-height: 1.1;
+  margin-bottom: 0.6rem;
+}
+.cardBlurb {
+  color: rgba(246, 240, 230, 0.85);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(8px);
+  transition:
+    max-height 0.55s var(--ease),
+    opacity 0.45s var(--ease),
+    transform 0.55s var(--ease);
+}
+.card:hover .cardBlurb {
+  max-height: 120px;
+  opacity: 1;
+  transform: translateY(0);
+}
+.cardArrow {
+  margin-top: 1rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-soft);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
