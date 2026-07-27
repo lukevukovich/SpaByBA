@@ -81,6 +81,11 @@
   align-items: center;
   gap: 0.6rem;
 }
+@media (max-width: 760px) {
+  .scrollHint {
+    display: none;
+  }
+}
 .scrollLine {
   width: 1px;
   height: 46px;
