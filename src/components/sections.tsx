@@ -148,16 +148,16 @@ export function SplitFeature({
   return (
     <div className={`${styles.split} ${reverse ? styles.reverse : ""}`}>
       <Reveal
-        className={styles.splitMedia}
-        direction={reverse ? "left" : "right"}
-      >
-        <img src={image} alt="" loading="lazy" />
-      </Reveal>
-      <Reveal
         className={styles.splitText}
         direction={reverse ? "right" : "left"}
       >
         {children}
+      </Reveal>
+      <Reveal
+        className={styles.splitMedia}
+        direction={reverse ? "left" : "right"}
+      >
+        <img src={image} alt="" loading="lazy" />
       </Reveal>
     </div>
   );

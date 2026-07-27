@@ -2,12 +2,9 @@
 The official Spa by B.A. website.
 
 ## To do
-- Fix subpage panel visibility and navigation
-- Improve header visibility, standardize header across all pages
-- Improve title card visibility with image backgrounds
-- Polish mobile layout, sizing, responsiveness, and spacing
-- Fix mobile header visibility and navigation
-- Improve logo in some way
-- Collect client reviews from Maddi
+- Remove redundant images
+- Improve logo in some way (from Canva)
 - Decide on pricing model
+    - 1000 up front
+    - 250 monthly
 - UAT

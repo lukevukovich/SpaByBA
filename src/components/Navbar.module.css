@@ -1,13 +1,19 @@
 .header {
   position: fixed;
-  inset: 0 0 auto 0;
+  top: var(--vv-top, 0px);
+  left: var(--vv-left, 0px);
+  width: var(--vv-width, 100%);
   z-index: 100;
   transition:
     background 0.5s var(--ease),
-    box-shadow 0.5s var(--ease),
-    height 0.5s var(--ease);
+    box-shadow 0.5s var(--ease);
   background: transparent;
 }
+
+.header :global(.container) {
+  max-width: 1213px;
+}
+
 .header.scrolled {
   background: rgba(250, 247, 242, 0.86);
   backdrop-filter: blur(14px);
@@ -19,28 +25,26 @@
 .inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
+  gap: 2.5rem;
   height: var(--nav-h);
-  transition: height 0.5s var(--ease);
-}
-.scrolled .inner {
-  height: 68px;
+  justify-content: space-between;
 }
 
 .brand {
   display: flex;
   align-items: center;
   gap: 0.7rem;
-  flex-shrink: 0;
+  /* Keep desktop header static: do not compress brand before mobile breakpoint. */
+  flex: 1 0 0;
+  min-width: max-content;
 }
 .brandLogo {
-  height: 42px;
-  width: auto;
-  transition: height 0.5s var(--ease);
-}
-.scrolled .brandLogo {
-  height: 36px;
+  height: 52px;
+  flex: 0 0 auto;
+  border-radius: 4px;
+  outline: 1px solid var(--line-soft);
+  border: 2px solid white;
+  box-shadow: var(--shadow-sm);
 }
 .brandText {
   font-family: var(--font-serif);
@@ -48,6 +52,7 @@
   letter-spacing: 0.04em;
   color: var(--charcoal);
   line-height: 1;
+  white-space: nowrap;
 }
 
 /* color adaptation over dark hero */
@@ -61,8 +66,10 @@
   display: flex;
   align-items: center;
   gap: 2rem;
+  justify-content: center;
+  flex: 0 1 auto;
 }
-@media (max-width: 1040px) {
+@media (max-width: 1170px) {
   .nav {
     display: none;
   }
@@ -70,6 +77,16 @@
 
 .navItem {
   position: relative;
+}
+/* Invisible bridge fills the gap between trigger and dropdown so hover is
+   never lost while moving the cursor into the submenu. */
+.navItem:has(.dropdown)::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: -0.5rem;
+  right: -0.5rem;
+  height: 18px;
 }
 .navLink {
   display: inline-flex;
@@ -86,6 +103,7 @@
   border: none;
   font-family: var(--font-sans);
   position: relative;
+  white-space: nowrap;
 }
 .navLink::after {
   content: "";
@@ -116,13 +134,14 @@
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translateX(-50%) translateY(8px);
-  min-width: 240px;
+  transform: translateX(-50%) translateY(6px);
+  margin-top: 14px;
+  min-width: 250px;
   background: var(--surface);
   border: 1px solid var(--line-soft);
   box-shadow: var(--shadow-md);
   border-radius: var(--radius-lg);
-  padding: 0.6rem;
+  padding: 0.5rem;
   opacity: 0;
   visibility: hidden;
   transition:
@@ -133,19 +152,27 @@
 .navItem:hover .dropdown {
   opacity: 1;
   visibility: visible;
-  transform: translateX(-50%) translateY(12px);
+  transform: translateX(-50%) translateY(0);
   pointer-events: auto;
+}
+/* After navigating, keep dropdowns closed until the pointer leaves the nav. */
+.suppressHover .navItem:hover .dropdown {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 .dropLink {
   display: block;
-  padding: 0.6rem 0.9rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  color: var(--ink);
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--charcoal);
   border-radius: 6px;
   transition:
     background 0.3s var(--ease),
     color 0.3s var(--ease);
+  white-space: nowrap;
 }
 .dropLink:hover {
   background: var(--bg-alt);
@@ -156,8 +183,12 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  /* Match brand behavior to prevent side-column squeeze. */
+  flex: 1 0 0;
+  min-width: max-content;
+  justify-content: flex-end;
 }
-@media (max-width: 1040px) {
+@media (max-width: 1170px) {
   .bookBtn {
     display: none;
   }
@@ -173,7 +204,7 @@
   padding: 8px;
   color: var(--charcoal);
 }
-@media (max-width: 1040px) {
+@media (max-width: 1170px) {
   .menuBtn {
     display: flex;
   }
@@ -196,8 +227,13 @@
   background: var(--bg);
   display: flex;
   flex-direction: column;
-  padding: 1.5rem clamp(1.25rem, 5vw, 2.5rem) 2.5rem;
+  height: 100dvh;
+  max-height: 100dvh;
+  padding: calc(1.5rem + env(safe-area-inset-top, 0px))
+    clamp(1.25rem, 5vw, 2.5rem) calc(2.5rem + env(safe-area-inset-bottom, 0px));
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 .drawerTop {
   display: flex;
@@ -212,6 +248,7 @@
   line-height: 1;
   cursor: pointer;
   color: var(--charcoal);
+  touch-action: manipulation;
 }
 .mLink {
   display: block;
@@ -220,6 +257,8 @@
   color: var(--charcoal);
   padding: 0.5rem 0;
   border-bottom: 1px solid var(--line-soft);
+  white-space: nowrap;
+  touch-action: manipulation;
 }
 .mSub {
   padding: 0.35rem 0 0.5rem 1rem;
@@ -230,6 +269,7 @@
   letter-spacing: 0.06em;
   color: var(--muted);
   padding: 0.3rem 0;
+  white-space: nowrap;
 }
 .mSubLink:hover,
 .mLink:hover {
@@ -240,4 +280,10 @@
   padding-top: 2rem;
   display: grid;
   gap: 0.8rem;
+}
+.bookBtn,
+.bookBtn span,
+.drawerCta .btn,
+.drawerCta .btn span {
+  white-space: nowrap;
 }
